@@ -60,6 +60,7 @@ exports.updateBoard = async (req, res) => {
       where: { id: parseInt(id) },
       data: { name },
     });
+    res.json(board);
   } catch (error) {
     res.status(500).json({
       error: error.message,
