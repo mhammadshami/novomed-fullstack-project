@@ -15,6 +15,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Routes
 app.use("/api/boards", require("./routes/board.routes"));
 app.use("/api/columns", require("./routes/column.routes"));
+app.use("/api/tasks", require("./routes/task.routes"));
+app.use("/api/subtasks", require("./routes/subtask.routes"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
