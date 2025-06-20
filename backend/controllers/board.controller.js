@@ -3,13 +3,14 @@ const prisma = new PrismaClient();
 
 // Get all boards
 exports.getAllBoards = async (req, res) => {
+  console.log('jehhhe')
   try {
     const boards = await prisma.board.findMany({
       include: { columns: true },
     });
     res.json(boards);
   } catch (error) {
-    req.status(500).json({
+    res.status(500).json({
       error: error.message,
     });
   }
