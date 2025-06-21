@@ -18,7 +18,7 @@ exports.getTasksByColumn = async (req, res) => {
 
 // Create a task
 exports.createTask = async (req, res) => {
-  const { title, description, columnId, order } = req.body;
+  const { title, description, columnId, order, subtasks } = req.body;
   try {
     const task = await prisma.task.create({
       data: {
@@ -26,6 +26,12 @@ exports.createTask = async (req, res) => {
         description,
         order,
         columnId: parseInt(columnId),
+        subtasks: {
+          create: subtasks.map((subtask) => ({
+            title: subtask.title,
+            isDone: subtask.isDone ?? false,
+          })),
+        },
       },
     });
     res.status(201).json(task);
@@ -39,7 +45,8 @@ exports.createTask = async (req, res) => {
 // Update a task
 exports.updateTask = async (req, res) => {
   const { id } = req.params;
-  const { title, description, columnId, order } = req.body;
+  const { title, description, columnId, order, subtasks } = req.body;
+
   try {
     const task = await prisma.task.update({
       where: { id: parseInt(id) },
@@ -48,6 +55,16 @@ exports.updateTask = async (req, res) => {
         description,
         columnId: parseInt(columnId),
         order,
+        subtasks: {
+          deleteMany: {},
+          create: subtasks.map((s) => ({
+            title: s.title,
+            isDone: s.isDone,
+          })),
+        },
+      },
+      include: {
+        subtasks: true,
       },
     });
     res.json(task);

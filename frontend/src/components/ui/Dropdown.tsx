@@ -1,5 +1,6 @@
 import DotsIcon from "@/components/icons/DotsIcon";
 import { getBoardById } from "@/features/boards/api/api";
+import useClickOutside from "@/hooks/useClickOutside";
 import useGetBoardIdFromURL from "@/hooks/useGetBoardIdFromURL";
 import useModalStore from "@/store/useModalStore";
 import clsx from "clsx";
@@ -7,35 +8,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { label } from "framer-motion/client";
 import React, { useEffect, useRef, useState } from "react";
 
-const DropdownComponent = () => {
+interface DropdownProps {
+  className?: string;
+  dropdownItemsList: {
+    label: string;
+    className?: string;
+    onClick?: () => void;
+  }[];
+}
+const Dropdown: React.FC<DropdownProps> = ({
+  className = "",
+  dropdownItemsList,
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const boardId = useGetBoardIdFromURL();
 
-  const handleDeleteBoard = () => {
-    useModalStore.getState().openModal("delete-board", { boardId });
-  };
-  
-  const handleEditBoard = async () => {
-    try {
-      const board = await getBoardById(boardId);
-      useModalStore.getState().openModal("edit-board", { board });
-    } catch (error) {
-      console.log("Failed to fetch board", error);
-    }
-  };
+  const dropdownRef = useRef<HTMLUListElement>(null);
 
-  const listItems = [
-    {
-      label: "Edit Board",
-      className: "text-gray-300",
-      onClick: handleEditBoard,
-    },
-    {
-      label: "Delete Board",
-      className: "text-destructive",
-      onClick: handleDeleteBoard,
-    },
-  ];
+  // to hide the dropdown when we click outside
+  useClickOutside(dropdownRef, () => setIsDropdownOpen(false));
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -53,13 +43,17 @@ const DropdownComponent = () => {
       <AnimatePresence>
         {isDropdownOpen && (
           <motion.ul
+            ref={dropdownRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="w-[192px] min-h-[94px] absolute rounded-lg top-[calc(100%+35px)] left-[calc(-192px+19px)] bg-white p-4 flex flex-col gap-4 z-[11]"
+            className={clsx(
+              "w-[192px] min-h-[94px] absolute rounded-lg bg-white p-4 flex flex-col gap-4 z-[11]",
+              className
+            )}
           >
-            {listItems.map((item) => (
+            {dropdownItemsList.map((item) => (
               <li
                 key={item.label}
                 className={clsx(
@@ -78,4 +72,4 @@ const DropdownComponent = () => {
   );
 };
 
-export default DropdownComponent;
+export default Dropdown;

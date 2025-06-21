@@ -3,10 +3,11 @@ import PageTitle from "@/components/ui/PageTitle";
 import Button from "@/components/ui/Button";
 import clsx from "clsx";
 import React, { useState } from "react";
-import DropdownComponent from "./dropdownComponent/DropdownComponent";
+import DropdownComponent from "../../ui/Dropdown";
 import Logo from "./Logo/Logo";
 import useSidebarStore from "@/store/useSidebarStore";
 import useModalStore from "@/store/useModalStore";
+import DropdownSection from "./dropdownSection/DropdownSection";
 
 const TopBar = () => {
   const isSidebarOpen = useSidebarStore((state) => state.isOpen);
@@ -42,7 +43,7 @@ const TopBar = () => {
           </div>
         </Button>
 
-        <DropdownComponent />
+        <DropdownSection/>
       </div>
     </header>
   );

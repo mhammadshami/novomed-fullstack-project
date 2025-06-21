@@ -12,7 +12,7 @@ const MainComponent = () => {
   const { data: columns } = useBoardColumnsWithTasks(boardId);
 
   return (
-    <div className="flex gap-6 p-6 pb-[50px] min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-96px)]">
+    <div className="min-w-max flex gap-6 p-6 pb-[50px] min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-96px)]">
       {columns?.map((column: BoardColumn, index: number) => (
         <BoardColumnComponent
           data={column}

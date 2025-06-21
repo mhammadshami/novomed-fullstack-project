@@ -10,13 +10,15 @@ import InputLabel from "../../../../components/ui/forms/InputLabel";
 import { X } from "lucide-react";
 import Button from "../../../../components/ui/Button";
 import { Board } from "../../types/types";
-import boardSchema, { BoardFormData } from "../../validations/validations";
 import useUpdateBoard from "../../hooks/useUpdateBoard";
+import { EditBoardSchema } from "../../validations/validations";
 
 interface EditBoardModalProps {
   onClose: () => void;
   board: Board;
 }
+
+export type BoardFormData = z.infer<typeof EditBoardSchema>;
 
 const EditBoardModal: React.FC<EditBoardModalProps> = ({ onClose, board }) => {
   const {
@@ -25,10 +27,10 @@ const EditBoardModal: React.FC<EditBoardModalProps> = ({ onClose, board }) => {
     register,
     formState: { errors },
   } = useForm<BoardFormData>({
-    resolver: zodResolver(boardSchema),
+    resolver: zodResolver(EditBoardSchema),
     defaultValues: {
       name: board.name,
-      columns: board?.columns?.map((col) => ({ name: col.name })) || [],
+      columns: board?.columns?.map((col) => ({ id: col.id, name: col.name })) || [],
     },
   });
 

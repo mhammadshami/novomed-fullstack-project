@@ -11,7 +11,7 @@ const OpenSideBarComponent = () => {
       className={clsx(
         `fixed left-0 bottom-[32px]`,
         `hidden`,
-        !isOpenSideBar ? "sm:flex" : "sm:hidden",
+        !isOpenSideBar ? "md:flex" : "md:hidden",
         `bg-primary px-[18px] py-[19px] rounded-tr-full rounded-br-full cursor-pointer`,
         `hover:bg-primary-hover`
       )}

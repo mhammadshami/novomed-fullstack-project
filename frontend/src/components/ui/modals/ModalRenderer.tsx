@@ -36,16 +36,16 @@ const ModalRenderer = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 2 }}
               className={clsx(
-                "relative w-full max-w-lg overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
+                "relative w-full max-w-lg text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
               )}
             >
-              <div className="max-h-[80vh] overflow-y-auto p-6 sm:p-8">
+              <div className="max-h-[80vh] p-6 sm:p-8">
                 {" "}
                 {type === "add-task" && <AddTaskModal onClose={closeModal} />}
                 {type === "add-board" && <AddBoardModal onClose={closeModal} />}
                 {type === "edit-board" && <EditBoardModal board={data.board} onClose={closeModal} />}
                 {type === "edit-task" && (
-                  <EditTaskModal task={data} onClose={closeModal} />
+                  <EditTaskModal task={data?.task} onClose={closeModal} />
                 )}
                 {type === "add-column" && (
                   <AddColumnModal onClose={closeModal} />

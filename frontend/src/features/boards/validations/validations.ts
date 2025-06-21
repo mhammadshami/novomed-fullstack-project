@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const boardSchema = z.object({
+export const AddBoardSchema = z.object({
     name: z.string().min(1, "Can’t be empty"),
     columns: z.array(
         z.object({
@@ -9,6 +9,12 @@ const boardSchema = z.object({
     ),
 });
 
-export type BoardFormData = z.infer<typeof boardSchema>;
-
-export default boardSchema;
+export const EditBoardSchema = z.object({
+    name: z.string().min(1, "Can’t be empty"),
+    columns: z.array(
+        z.object({
+            id: z.number().optional(),
+            name: z.string().min(1, "Can’t be empty"),
+        })
+    ),
+});

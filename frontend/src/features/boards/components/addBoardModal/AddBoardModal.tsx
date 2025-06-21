@@ -11,11 +11,13 @@ import { X } from "lucide-react";
 import Button from "../../../../components/ui/Button";
 import TextareaInput from "../../../../components/ui/forms/TextareaInput";
 import useCreateBoard from "../../hooks/useCreateBoard";
-import boardSchema, { BoardFormData } from "../../validations/validations";
+import { AddBoardSchema } from "../../validations/validations";
 
 interface AddBoardModalProps {
   onClose: () => void;
 }
+
+export type BoardFormData = z.infer<typeof AddBoardSchema>;
 
 const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
   const {
@@ -24,7 +26,7 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
     register,
     formState: { errors },
   } = useForm<BoardFormData>({
-    resolver: zodResolver(boardSchema),
+    resolver: zodResolver(AddBoardSchema),
     defaultValues: {
       name: "",
       columns: [{ name: "" }, { name: "" }],

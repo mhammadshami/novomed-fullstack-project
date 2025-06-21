@@ -12,33 +12,13 @@ import Button from "@/components/ui/Button";
 import TextareaInput from "@/components/ui/forms/TextareaInput";
 import useStatusOptions from "../../hooks/useStatusOptions";
 import useCreateTask from "../../hooks/useCreateTask";
-
-const taskSchema = z.object({
-  title: z.string().min(1, "Can’t be empty"),
-  description: z.string().optional(),
-  subtasks: z.array(
-    z.object({
-      text: z.string().min(1, "Can’t be empty"),
-      placeholder: z.string(),
-    })
-  ),
-  status: z.number({
-    required_error: "Select a status",
-    invalid_type_error: "Status must be a number",
-  }),
-});
-
-type TaskFormData = z.infer<typeof taskSchema>;
-
-const statusOptions = [
-  { label: "Todo", value: "todo" },
-  { label: "In Progress", value: "in-progress" },
-  { label: "Done", value: "done" },
-];
+import { AddTaskSchema } from "../../validations/validations";
 
 interface AddTaskModalProps {
   onClose: () => void;
 }
+
+type AddTaskFormData = z.infer<typeof AddTaskSchema>;
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
   const { options, isLoading, isError } = useStatusOptions();
@@ -48,14 +28,14 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
     register,
     formState: { errors },
     setValue,
-  } = useForm<TaskFormData>({
-    resolver: zodResolver(taskSchema),
+  } = useForm<AddTaskFormData>({
+    resolver: zodResolver(AddTaskSchema),
     defaultValues: {
       title: "",
       description: "",
       subtasks: [
-        { text: "", placeholder: "e.g. Make coffee" },
-        { text: "", placeholder: "e.g. Drink coffee & smile" },
+        { title: "", placeholder: "e.g. Make coffee" },
+        { title: "", placeholder: "e.g. Drink coffee & smile" },
       ],
       status: options[0]?.value ?? "",
     },
@@ -67,13 +47,13 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
   });
 
   const { mutate, isPending } = useCreateTask(onClose);
-  const onSubmit = (data: TaskFormData) => {
+  const onSubmit = (data: AddTaskFormData) => {
     mutate({
       title: data.title,
       description: data.description,
       columnId: Number(data.status),
       subtasks: data.subtasks.map((s) => ({
-        title: s.text,
+        title: s.title,
         isDone: false,
       })),
       order: 0,
@@ -103,8 +83,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
               <div key={field.id} className="flex gap-4">
                 <TextInput
                   placeholder={field.placeholder}
-                  {...register(`subtasks.${index}.text`)}
-                  error={errors.subtasks?.[index]?.text?.message}
+                  {...register(`subtasks.${index}.title`)}
+                  error={errors.subtasks?.[index]?.title?.message}
                 />{" "}
                 <button
                   type="button"
@@ -121,7 +101,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
               className="w-full"
               onClick={() =>
                 append({
-                  text: "",
+                  title: "",
                   placeholder: "",
                 })
               }

@@ -13,7 +13,7 @@ const SubtaskCheckbox: React.FC<SubtaskCheckboxProps> = ({
   onChange,
 }) => {
   return (
-    <label className="flex items-center gap-3 cursor-pointer group bg-gray-100 hover:bg-primary/25 dark:bg-gray-900 dark:hover:bg-primary/25 rounded-[4px] ps-3">
+    <label className="w-full flex items-center gap-3 cursor-pointer group bg-gray-100 hover:bg-primary/25 dark:bg-gray-900 dark:hover:bg-primary/25 rounded-[4px] ps-3">
       <div className="relative h-[40px] flex items-center">
         <input
           type="checkbox"

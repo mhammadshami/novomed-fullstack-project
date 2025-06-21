@@ -64,21 +64,56 @@ exports.getBoardById = async (req, res) => {
 exports.updateBoard = async (req, res) => {
   const { id } = req.params;
   const { name, columns } = req.body;
+  console.log('columns', columns)
   try {
+    const boardId = parseInt(id);
+
+    // get current columns
+    const existingColumns = await prisma.column.findMany({
+      where: { boardId },
+    });
+
+    const incomingIds = columns.filter((col) => col.id).map((col) => col.id);
+    const deletedIds = existingColumns
+      .filter((col) => !incomingIds.includes(col.id))
+      .map((col) => col.id);
+
+    // delete removed columns
+    await prisma.column.deleteMany({
+      where: {
+        id: { in: deletedIds },
+      },
+    });
+
+    // update existing + create new
+    await Promise.all(
+      columns.map(async (col, index) => {
+        if (col.id) {
+          await prisma.column.update({
+            where: { id: col.id },
+            data: {
+              name: col.name,
+              order: index,
+            },
+          });
+        } else {
+          // create
+          await prisma.column.create({
+            data: {
+              name: col.name,
+              order: index,
+              boardId,
+            },
+          });
+        }
+      })
+    );
+
     // update board name
     const updatedBoard = await prisma.board.update({
-      where: { id: parseInt(id) },
+      where: { id: boardId },
       data: {
         name,
-
-        // Replace all columns with new ones
-        columns: {
-          deleteMany: {}, // delete existing
-          create: columns.map((col, index) => ({
-            name: col.name,
-            order: index,
-          })),
-        },
       },
       include: {
         columns: true,

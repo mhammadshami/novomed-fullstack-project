@@ -25,7 +25,7 @@ const BoardColumnComponent: React.FC<BoardColumnComponent> = ({
       />
       <div className="flex flex-col mt-6">
         {tasks?.map((task) => (
-          <TaskCard data={task} />
+          <TaskCard data={task} key={name}/>
         ))}
       </div>
     </div>
