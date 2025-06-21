@@ -1,4 +1,5 @@
 import DotsIcon from "@/components/icons/DotsIcon";
+import { getBoardById } from "@/features/boards/api/api";
 import useGetBoardIdFromURL from "@/hooks/useGetBoardIdFromURL";
 import useModalStore from "@/store/useModalStore";
 import clsx from "clsx";
@@ -10,18 +11,29 @@ const DropdownComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const boardId = useGetBoardIdFromURL();
 
+  const handleDeleteBoard = () => {
+    useModalStore.getState().openModal("delete-board", { boardId });
+  };
+  
+  const handleEditBoard = async () => {
+    try {
+      const board = await getBoardById(boardId);
+      useModalStore.getState().openModal("edit-board", { board });
+    } catch (error) {
+      console.log("Failed to fetch board", error);
+    }
+  };
+
   const listItems = [
     {
       label: "Edit Board",
       className: "text-gray-300",
-      onClick: () => {},
+      onClick: handleEditBoard,
     },
     {
       label: "Delete Board",
       className: "text-destructive",
-      onClick: () => {
-        useModalStore.getState().openModal("delete-board", { boardId });
-      },
+      onClick: handleDeleteBoard,
     },
   ];
 

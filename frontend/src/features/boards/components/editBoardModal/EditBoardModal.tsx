@@ -9,15 +9,16 @@ import TextInput from "../../../../components/ui/forms/TextInput";
 import InputLabel from "../../../../components/ui/forms/InputLabel";
 import { X } from "lucide-react";
 import Button from "../../../../components/ui/Button";
-import TextareaInput from "../../../../components/ui/forms/TextareaInput";
-import useCreateBoard from "../../hooks/useCreateBoard";
+import { Board } from "../../types/types";
 import boardSchema, { BoardFormData } from "../../validations/validations";
+import useUpdateBoard from "../../hooks/useUpdateBoard";
 
-interface AddBoardModalProps {
+interface EditBoardModalProps {
   onClose: () => void;
+  board: Board;
 }
 
-const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
+const EditBoardModal: React.FC<EditBoardModalProps> = ({ onClose, board }) => {
   const {
     control,
     handleSubmit,
@@ -26,8 +27,8 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
   } = useForm<BoardFormData>({
     resolver: zodResolver(boardSchema),
     defaultValues: {
-      name: "",
-      columns: [{ name: "" }, { name: "" }],
+      name: board.name,
+      columns: board?.columns?.map((col) => ({ name: col.name })) || [],
     },
   });
 
@@ -36,23 +37,24 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
     name: "columns",
   });
 
-  const { mutate, isPending } = useCreateBoard(onClose);
+  const { mutate, isPending } = useUpdateBoard(onClose);
+
   const onSubmit = (data: BoardFormData) => {
-    mutate(data);
+    mutate({ id: board.id, name: data.name, columns: data.columns });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ModalTitle title="Add New Board" />
+      <ModalTitle title="Edit Board" />
       <div className="flex flex-col gap-6">
         <TextInput
-          label="Name"
+          label="Board Name"
           placeholder="e.g. Web Design"
           {...register("name")}
           error={errors.name?.message}
         />
         <div>
-          <InputLabel label="Columns" />
+          <InputLabel label="Board Columns" />
           <div className="flex flex-col gap-y-3">
             {fields.map((field, index) => (
               <div key={field.id} className="flex gap-4">
@@ -85,11 +87,11 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
         </div>
 
         <Button size="sm" type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Creating..." : "Create New Board"}
+          {isPending ? "Saving..." : "Save Changes"}
         </Button>
       </div>
     </form>
   );
 };
 
-export default AddBoardModal;
+export default EditBoardModal;

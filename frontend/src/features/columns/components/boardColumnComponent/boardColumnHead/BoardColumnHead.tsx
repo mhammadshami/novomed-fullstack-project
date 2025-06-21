@@ -20,7 +20,7 @@ const BoardColumnHead: React.FC<BoardColumnHeadProps> = ({
           backgroundColor: circleColor,
         }}
       />
-      TODO ({tasksCount})
+      {columnName} ({tasksCount})
     </h3>
   );
 };

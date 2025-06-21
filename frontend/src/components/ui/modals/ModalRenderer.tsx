@@ -9,11 +9,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import AddBoardModal from "@/features/boards/components/addBoardModal/AddBoardModal";
 import DeleteBoardModal from "@/features/boards/components/deleteBoardModal/DeleteBoardModal";
 import clsx from "clsx";
+import EditBoardModal from "@/features/boards/components/editBoardModal/EditBoardModal";
 
 const ModalRenderer = () => {
   const { isOpen, type, data, closeModal } = useModalStore();
 
   if (!isOpen || !type) return null;
+  console.log('data', data);
   
   return (
     <AnimatePresence>
@@ -41,6 +43,7 @@ const ModalRenderer = () => {
                 {" "}
                 {type === "add-task" && <AddTaskModal onClose={closeModal} />}
                 {type === "add-board" && <AddBoardModal onClose={closeModal} />}
+                {type === "edit-board" && <EditBoardModal board={data.board} onClose={closeModal} />}
                 {type === "edit-task" && (
                   <EditTaskModal task={data} onClose={closeModal} />
                 )}
