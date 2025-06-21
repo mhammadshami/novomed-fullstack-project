@@ -1,7 +1,7 @@
 "use client";
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import Script from "next/script";
+//import Script from "next/script";
 
 // components
 import SideBar from "@/components/layout/sideBar/SideBar";
@@ -20,7 +20,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
+      {/* <head>
         <Script id="set-theme" strategy="beforeInteractive">
           {`
             (function() {
@@ -30,19 +30,19 @@ export default function RootLayout({
             })();
           `}
         </Script>
-      </head>
-      <body className="bg-gray-100 dark:bg-gray-900">
-        <ThemeProvider>
-          <div className="flex">
-            <QueryClientProvider client={queryClient}>
+      </head> */}
+      <QueryClientProvider client={queryClient}>
+        <body className="bg-gray-100 dark:bg-gray-900">
+          <ThemeProvider>
+            <div className="flex">
               <SideBar />
               {children}
               <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
-          </div>
-        </ThemeProvider>
-        <ModalRenderer />
-      </body>
+            </div>
+          </ThemeProvider>
+          <ModalRenderer />
+        </body>
+      </QueryClientProvider>
     </html>
   );
 }

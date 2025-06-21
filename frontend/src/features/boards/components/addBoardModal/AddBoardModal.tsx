@@ -10,6 +10,7 @@ import InputLabel from "../../../../components/ui/forms/InputLabel";
 import { X } from "lucide-react";
 import Button from "../../../../components/ui/Button";
 import TextareaInput from "../../../../components/ui/forms/TextareaInput";
+import useCreateBoard from "../../hooks/useCreateBoard";
 
 const taskSchema = z.object({
   name: z.string().min(1, "Can’t be empty"),
@@ -26,7 +27,7 @@ interface AddBoardModalProps {
   onClose: () => void;
 }
 
-const AddBoardModal: React.FC<AddBoardModalProps> = () => {
+const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
   const {
     control,
     handleSubmit,
@@ -45,17 +46,18 @@ const AddBoardModal: React.FC<AddBoardModalProps> = () => {
     name: "columns",
   });
 
+  const { mutate, isPending } = useCreateBoard(onClose);
   const onSubmit = (data: TaskFormData) => {
-    console.log("data", data);
+    mutate(data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ModalTitle title="Add New Task" />
+      <ModalTitle title="Add New Board" />
       <div className="flex flex-col gap-6">
         <TextInput
-          label="Title"
-          placeholder="e.g. Take coffee break"
+          label="Name"
+          placeholder="e.g. Web Design"
           {...register("name")}
           error={errors.name?.message}
         />
@@ -83,7 +85,7 @@ const AddBoardModal: React.FC<AddBoardModalProps> = () => {
               className="w-full"
               onClick={() =>
                 append({
-                  name: ""
+                  name: "",
                 })
               }
             >
@@ -92,8 +94,8 @@ const AddBoardModal: React.FC<AddBoardModalProps> = () => {
           </div>
         </div>
 
-        <Button size="sm" type="submit" className="w-full">
-          Create New Board
+        <Button size="sm" type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Creating..." : "Create New Board"}
         </Button>
       </div>
     </form>

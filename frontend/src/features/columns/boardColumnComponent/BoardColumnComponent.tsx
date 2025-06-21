@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import BoardColumnHead from "./boardColumnHead/BoardColumnHead";
-import TaskCard from "@/features/tasks/taskCard/TaskCard";
+import TaskCard from "@/features/tasks/components/taskCard/TaskCard";
 
 const BoardColumnComponent = () => {
   const [status, setStatus] = useState("");

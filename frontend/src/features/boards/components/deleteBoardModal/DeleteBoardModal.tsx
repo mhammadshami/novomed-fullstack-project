@@ -1,5 +1,5 @@
 import React from "react";
-import ConfirmModal from "../../../../components/ui/modals/confirmModal/ConfirmModal";
+import ConfirmModal from "@/components/ui/modals/confirmModal/ConfirmModal";
 
 interface DeleteBoardModalProps {
   boardId: string;
