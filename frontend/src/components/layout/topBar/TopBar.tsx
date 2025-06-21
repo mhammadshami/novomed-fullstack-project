@@ -18,6 +18,7 @@ const TopBar = () => {
   return (
     <header
       className={clsx(
+        "max-w-[100vw]",
         "bg-white px-[24px] h-[64px] sm:h-[96px] flex items-center justify-between border-b border-secondary",
         "dark:bg-gray-500 dark:border-gray-400"
       )}

@@ -24,8 +24,9 @@ const BoardColumnComponent: React.FC<BoardColumnComponent> = ({
         circleColor={circleColor}
       />
       <div className="flex flex-col mt-6">
-        <TaskCard />
-        <TaskCard />
+        {tasks?.map((task) => (
+          <TaskCard data={task} />
+        ))}
       </div>
     </div>
   );

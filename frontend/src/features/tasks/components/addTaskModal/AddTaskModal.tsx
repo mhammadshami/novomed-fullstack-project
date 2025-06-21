@@ -1,6 +1,6 @@
 "use client";
 import SelectInput from "@/components/ui/forms/SelectInput";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import ModalTitle from "@/components/ui/modals/ModalTitle";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -10,6 +10,8 @@ import InputLabel from "@/components/ui/forms/InputLabel";
 import { X } from "lucide-react";
 import Button from "@/components/ui/Button";
 import TextareaInput from "@/components/ui/forms/TextareaInput";
+import useStatusOptions from "../../hooks/useStatusOptions";
+import useCreateTask from "../../hooks/useCreateTask";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Can’t be empty"),
@@ -20,7 +22,10 @@ const taskSchema = z.object({
       placeholder: z.string(),
     })
   ),
-  status: z.string().min(1, "Select a status"),
+  status: z.number({
+    required_error: "Select a status",
+    invalid_type_error: "Status must be a number",
+  }),
 });
 
 type TaskFormData = z.infer<typeof taskSchema>;
@@ -35,12 +40,14 @@ interface AddTaskModalProps {
   onClose: () => void;
 }
 
-const AddTaskModal: React.FC<AddTaskModalProps> = () => {
+const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
+  const { options, isLoading, isError } = useStatusOptions();
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
@@ -50,7 +57,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = () => {
         { text: "", placeholder: "e.g. Make coffee" },
         { text: "", placeholder: "e.g. Drink coffee & smile" },
       ],
-      status: "todo",
+      status: options[0]?.value ?? "",
     },
   });
 
@@ -59,8 +66,18 @@ const AddTaskModal: React.FC<AddTaskModalProps> = () => {
     name: "subtasks",
   });
 
+  const { mutate, isPending } = useCreateTask(onClose);
   const onSubmit = (data: TaskFormData) => {
-    console.log("data", data);
+    mutate({
+      title: data.title,
+      description: data.description,
+      columnId: Number(data.status),
+      subtasks: data.subtasks.map((s) => ({
+        title: s.text,
+        isDone: false,
+      })),
+      order: 0,
+    });
   };
 
   return (
@@ -121,7 +138,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = () => {
             render={({ field }) => (
               <SelectInput
                 label="Status"
-                options={statusOptions}
+                options={options}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -129,8 +146,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = () => {
           />
         </div>
 
-        <Button size="sm" type="submit" className="w-full">
-          Create Task
+        <Button size="sm" type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Creating..." : "Create Task"}
         </Button>
       </div>
     </form>

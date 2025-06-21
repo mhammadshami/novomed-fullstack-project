@@ -16,7 +16,7 @@ type Option = {
 interface SelectInputProps {
   label?: string;
   options: Option[];
-  value: string;
+  value: string | number;
   onChange: (value: string) => void;
 }
 
@@ -57,7 +57,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
             </span>
           </ListboxButton>
 
-          <ListboxOptions className="absolute space-y-[8px] z-20 w-full p-4 mt-[7px] overflow-auto bg-white rounded-lg shadow-lg max-h-60 dark:bg-gray-900 ring-1 ring-black/10 focus:outline-none">
+          <ListboxOptions className="absolute space-y-[8px] z-[100] w-full p-4 mt-[7px] overflow-auto bg-white rounded-lg shadow-lg max-h-60 dark:bg-gray-900 ring-1 ring-black/10 focus:outline-none">
             {options.map((option) => (
               <ListboxOption
                 key={option.value}

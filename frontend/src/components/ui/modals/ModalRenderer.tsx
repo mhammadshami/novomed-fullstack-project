@@ -8,6 +8,7 @@ import AddColumnModal from "@/features/columns/components/addColumnModal/AddColu
 import { AnimatePresence, motion } from "framer-motion";
 import AddBoardModal from "@/features/boards/components/addBoardModal/AddBoardModal";
 import DeleteBoardModal from "@/features/boards/components/deleteBoardModal/DeleteBoardModal";
+import clsx from "clsx";
 
 const ModalRenderer = () => {
   const { isOpen, type, data, closeModal } = useModalStore();
@@ -32,20 +33,27 @@ const ModalRenderer = () => {
               initial={{ opacity: 0, y: 2 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 2 }}
-              className="relative w-full max-w-lg p-6 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:p-8 dark:bg-gray-800"
+              className={clsx(
+                "relative w-full max-w-lg text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
+              )}
             >
-              {type === "add-task" && <AddTaskModal onClose={closeModal} />}
-              {type === "add-board" && <AddBoardModal onClose={closeModal} />}
-              {type === "edit-task" && (
-                <EditTaskModal task={data} onClose={closeModal} />
-              )}
-              {type === "add-column" && <AddColumnModal onClose={closeModal} />}
-              {type === "delete-board" && (
-                <DeleteBoardModal boardId={data} onClose={closeModal} />
-              )}
-              {type === "delete-task" && (
-                <DeleteTaskModal taskId={data} onClose={closeModal} />
-              )}
+              <div className="max-h-[80vh] overflow-y-auto p-6 sm:p-8">
+                {" "}
+                {type === "add-task" && <AddTaskModal onClose={closeModal} />}
+                {type === "add-board" && <AddBoardModal onClose={closeModal} />}
+                {type === "edit-task" && (
+                  <EditTaskModal task={data} onClose={closeModal} />
+                )}
+                {type === "add-column" && (
+                  <AddColumnModal onClose={closeModal} />
+                )}
+                {type === "delete-board" && (
+                  <DeleteBoardModal boardId={data} onClose={closeModal} />
+                )}
+                {type === "delete-task" && (
+                  <DeleteTaskModal taskId={data} onClose={closeModal} />
+                )}
+              </div>
             </motion.div>
           </div>
         </div>

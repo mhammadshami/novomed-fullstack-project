@@ -5,3 +5,12 @@ export interface BoardColumn {
     order: number;
     tasks: any[];
 }
+
+export interface Task {
+    id: number;
+    title: string;
+    description: string;
+    columnId: number;
+    order: number;
+    subtasks: any[]
+}

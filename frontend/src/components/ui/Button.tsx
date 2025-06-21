@@ -18,8 +18,8 @@ const variants = {
 };
 
 const sizes = {
-  lg: "pt-[15px] pb-[14px] px-[61.5px] text-[15px] leading-[1.267]",
-  sm: "pt-[8px] pb-[9px] px-[70px] text-[13px] leading-[23px]",
+  lg: "pt-[15px] pb-[14px] px-2 sm:px-[61.5px] text-[15px] leading-[1.267]",
+  sm: "pt-[8px] pb-[9px] px-2 sm:px-[70px] text-[13px] leading-[23px]",
 };
 
 const Button: React.FC<ButtonProps> = ({

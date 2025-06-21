@@ -1,7 +1,14 @@
+import { Task } from "@/features/columns/types/types";
 import clsx from "clsx";
 import React from "react";
 
-const TaskCard = () => {
+interface TaskCardProps {
+  data: Task;
+}
+
+const TaskCard: React.FC<TaskCardProps> = ({ data }) => {
+  const { id, title, description, columnId, order, subtasks } = data;
+
   return (
     <div
       className={clsx(
@@ -13,10 +20,11 @@ const TaskCard = () => {
         className={clsx(
           "text-sm font-bold leading-[19px] text-base-dark group-hover:text-primary",
           "transition-all duration-150 ease-in-out",
-          "dark:text-white"
+          "dark:text-white",
+          "truncate"
         )}
       >
-        Build UI for onboarding flow
+       {title}
       </h3>
       <p className="text-xs text-gray-300 leading-[15px] mt-2">
         0 of 3 substasks
