@@ -63,13 +63,29 @@ exports.getBoardById = async (req, res) => {
 
 exports.updateBoard = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name, columns } = req.body;
   try {
-    const board = await prisma.board.update({
+    // update board name
+    const updatedBoard = await prisma.board.update({
       where: { id: parseInt(id) },
-      data: { name },
+      data: {
+        name,
+
+        // Replace all columns with new ones
+        columns: {
+          deleteMany: {}, // delete existing
+          create: columns.map((col, index) => ({
+            name: col.name,
+            order: index,
+          })),
+        },
+      },
+      include: {
+        columns: true,
+      },
     });
-    res.json(board);
+
+    res.json(updatedBoard);
   } catch (error) {
     res.status(500).json({
       error: error.message,

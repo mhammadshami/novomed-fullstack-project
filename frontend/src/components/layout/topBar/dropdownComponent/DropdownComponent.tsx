@@ -1,22 +1,29 @@
 import DotsIcon from "@/components/icons/DotsIcon";
+import useGetBoardIdFromURL from "@/hooks/useGetBoardIdFromURL";
+import useModalStore from "@/store/useModalStore";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { label } from "framer-motion/client";
 import React, { useEffect, useRef, useState } from "react";
 
-const listItems = [
-  {
-    label: "Edit Board",
-    className: "text-gray-300",
-  },
-  {
-    label: "Delete Board",
-    className: "text-destructive",
-  },
-];
-
 const DropdownComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const boardId = useGetBoardIdFromURL();
+
+  const listItems = [
+    {
+      label: "Edit Board",
+      className: "text-gray-300",
+      onClick: () => {},
+    },
+    {
+      label: "Delete Board",
+      className: "text-destructive",
+      onClick: () => {
+        useModalStore.getState().openModal("delete-board", { boardId });
+      },
+    },
+  ];
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -47,6 +54,7 @@ const DropdownComponent = () => {
                   "text-[13px] leading-[23px] font-medium cursor-pointer",
                   item.className
                 )}
+                onClick={item.onClick}
               >
                 {item.label}
               </li>

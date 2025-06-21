@@ -14,7 +14,7 @@ const ModalRenderer = () => {
   const { isOpen, type, data, closeModal } = useModalStore();
 
   if (!isOpen || !type) return null;
-
+  
   return (
     <AnimatePresence>
       {isOpen && type && (
@@ -34,7 +34,7 @@ const ModalRenderer = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 2 }}
               className={clsx(
-                "relative w-full max-w-lg text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
+                "relative w-full max-w-lg overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
               )}
             >
               <div className="max-h-[80vh] overflow-y-auto p-6 sm:p-8">
@@ -48,7 +48,7 @@ const ModalRenderer = () => {
                   <AddColumnModal onClose={closeModal} />
                 )}
                 {type === "delete-board" && (
-                  <DeleteBoardModal boardId={data} onClose={closeModal} />
+                  <DeleteBoardModal boardId={data?.boardId} onClose={closeModal} />
                 )}
                 {type === "delete-task" && (
                   <DeleteTaskModal taskId={data} onClose={closeModal} />

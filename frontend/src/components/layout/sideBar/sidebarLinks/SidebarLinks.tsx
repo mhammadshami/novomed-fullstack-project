@@ -8,6 +8,7 @@ import SidebarLinkIcon from "@/components/icons/SidebarLinkIcon";
 import { Board } from "@/features/boards/types/types";
 import useModalStore from "@/store/useModalStore";
 import useBoards from "@/features/boards/hooks/useBoards";
+import useGetBoardIdFromURL from "@/hooks/useGetBoardIdFromURL";
 
 const SidebarLinks = () => {
   const pathname = usePathname();

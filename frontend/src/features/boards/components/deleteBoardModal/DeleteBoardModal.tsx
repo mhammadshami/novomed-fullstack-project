@@ -1,8 +1,9 @@
 import React from "react";
 import ConfirmModal from "@/components/ui/modals/confirmModal/ConfirmModal";
+import useDeleteBoard from "../../hooks/useDeleteBoard";
 
 interface DeleteBoardModalProps {
-  boardId: string;
+  boardId: number;
   onClose: () => void;
 }
 
@@ -10,7 +11,10 @@ const DeleteBoardModal: React.FC<DeleteBoardModalProps> = ({
   boardId,
   onClose,
 }) => {
-  const handleBoardDelete = () => {};
+  const { mutate, isPending } = useDeleteBoard(onClose);
+  const handleBoardDelete = () => {
+    mutate(boardId);
+  };
 
   return (
     <ConfirmModal
