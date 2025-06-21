@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 exports.getAllBoards = async (req, res) => {
   try {
     const boards = await prisma.board.findMany({
-      include: { columns: false },
+      include: { columns: false, createdAt: false, updatedAt: false },
     });
     res.json(boards);
   } catch (error) {
@@ -17,11 +17,20 @@ exports.getAllBoards = async (req, res) => {
 
 // Create new board
 exports.createBoard = async (req, res) => {
-  const { name } = req.body;
+  const { name, columns } = req.body;
   try {
     const board = await prisma.board.create({
       data: {
         name,
+        columns: {
+          create: columns.map((col, index) => ({
+            name: col.name,
+            order: index,
+          })),
+        },
+      },
+      include: {
+        columns: true,
       },
     });
     res.status(201).json(board);

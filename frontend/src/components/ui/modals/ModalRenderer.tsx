@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import useModalStore from "@/store/useModalStore";
-import AddTaskModal from "./addTaskModal/AddTaskModal";
-import EditTaskModal from "./editTaskModal/EditTaskModal";
-import DeleteTaskModal from "./deleteTaskModal/DeleteTaskModal";
-import AddColumnModal from "./addColumnModal/AddColumnModal";
+import AddTaskModal from "../../../features/tasks/components/addTaskModal/AddTaskModal";
+import EditTaskModal from "../../../features/tasks/components/editTaskModal/EditTaskModal";
+import DeleteTaskModal from "../../../features/tasks/components/deleteTaskModal/DeleteTaskModal";
+import AddColumnModal from "../../../features/columns/components/addColumnModal/AddColumnModal";
 import { AnimatePresence, motion } from "framer-motion";
-import AddBoardModal from "./addBoardModal/AddBoardModal";
-import DeleteBoardModal from "./deleteBoardModal/DeleteBoardModal";
+import AddBoardModal from "../../../features/boards/components/addBoardModal/AddBoardModal";
+import DeleteBoardModal from "../../../features/boards/components/deleteBoardModal/DeleteBoardModal";
 
 const ModalRenderer = () => {
   const { isOpen, type, data, closeModal } = useModalStore();

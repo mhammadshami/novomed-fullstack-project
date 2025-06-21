@@ -2,14 +2,14 @@
 import SelectInput from "@/components/ui/forms/SelectInput";
 import React, { useState } from "react";
 import { z } from "zod";
-import ModalTitle from "../ModalTitle";
+import ModalTitle from "../../../../components/ui/modals/ModalTitle";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import TextInput from "../../forms/TextInput";
-import InputLabel from "../../forms/InputLabel";
+import TextInput from "../../../../components/ui/forms/TextInput";
+import InputLabel from "../../../../components/ui/forms/InputLabel";
 import { X } from "lucide-react";
-import Button from "../../Button";
-import TextareaInput from "../../forms/TextareaInput";
+import Button from "../../../../components/ui/Button";
+import TextareaInput from "../../../../components/ui/forms/TextareaInput";
 
 const taskSchema = z.object({
   name: z.string().min(1, "Can’t be empty"),

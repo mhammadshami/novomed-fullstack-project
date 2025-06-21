@@ -3,8 +3,8 @@ import React from "react";
 import clsx from "clsx";
 
 // components
-import MainComponent from "@/components/dashboard/platformLaunchPage/mainComponent/MainComponent";
-import TopBar from "@/components/dashboard/platformLaunchPage/topBar/TopBar";
+import MainComponent from "@/features/boards/components/mainComponent/MainComponent";
+import TopBar from "@/components/layout/topBar/TopBar";
 
 // hooks
 import useSidebarStore from "@/store/useSidebarStore";

@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import BoardColumnHead from "./boardColumnHead/BoardColumnHead";
-import TaskCard from "./taskCard/TaskCard";
-import useModalStore from "@/store/useModalStore";
-import SelectInput from "@/components/ui/forms/SelectInput";
-import TextInput from "@/components/ui/forms/TextInput";
-import SubtaskCheckbox from "@/components/ui/forms/SubtaskCheckbox";
+import TaskCard from "@/features/tasks/taskCard/TaskCard";
 
 const BoardColumnComponent = () => {
   const [status, setStatus] = useState("");

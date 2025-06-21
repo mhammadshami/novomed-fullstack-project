@@ -1,7 +1,7 @@
 import MoonIcon from "@/components/icons/MoonIcon";
 import SunIcon from "@/components/icons/SunIcon";
 import React from "react";
-import Switch from "../../Switch";
+import Switch from "@/components/ui/Switch";
 
 const ModeToggler = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
-import BoardColumnComponent from './boardColumnComponent/BoardColumnComponent'
-import AddColumnComponent from './addColumnComponent/AddColumnComponent'
+import BoardColumnComponent from '@/features/columns/boardColumnComponent/BoardColumnComponent'
+import AddColumnComponent from '@/features/columns/components/addColumnComponent/AddColumnComponent'
 
 const MainComponent = () => {
   return (
