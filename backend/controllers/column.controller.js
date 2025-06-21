@@ -8,7 +8,14 @@ exports.getColumnsByBoard = async (req, res) => {
   try {
     const columns = await prisma.column.findMany({
       where: { boardId: parseInt(boardId) },
-      include: { tasks: true },
+      include: {
+        tasks: {
+          include: {
+            subtasks: true,
+          },
+          orderBy: { order: "asc" },
+        },
+      },
       orderBy: { order: "asc" },
     });
     res.json(columns);
@@ -61,8 +68,8 @@ exports.deleteColumn = async (req, res) => {
       where: { id: parseInt(id) },
     });
     res.json({
-      message: "Column deleted successfully!"
-    })
+      message: "Column deleted successfully!",
+    });
   } catch (error) {
     res.status(500).json({
       error: error.message,
