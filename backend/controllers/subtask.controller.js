@@ -39,7 +39,7 @@ exports.updateTask = async (req, res) => {
   const { title, isDone } = req.body;
   try {
     const subtask = await prisma.subtask.update({
-    where: {id: parseInt(id)},
+      where: { id: parseInt(id) },
       data: { title, isDone },
     });
     res.json(subtask);
