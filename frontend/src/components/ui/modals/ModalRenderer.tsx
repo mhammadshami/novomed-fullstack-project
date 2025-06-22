@@ -54,7 +54,7 @@ const ModalRenderer = () => {
                   <DeleteBoardModal boardId={data?.boardId} onClose={closeModal} />
                 )}
                 {type === "delete-task" && (
-                  <DeleteTaskModal taskId={data} onClose={closeModal} />
+                  <DeleteTaskModal taskId={data?.taskId} onClose={closeModal} />
                 )}
               </div>
             </motion.div>

@@ -25,11 +25,11 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         {description}
       </p>
       <div className="flex gap-4">
-        <Button size="sm" variant="destructive" onClick={onClose}>
-          {closeButtonTxt}
-        </Button>
         <Button size="sm" variant="secondary" onClick={onConfirm}>
           {confirmButtonTxt}
+        </Button>
+        <Button size="sm" variant="destructive" onClick={onClose}>
+          {closeButtonTxt}
         </Button>
       </div>
     </div>

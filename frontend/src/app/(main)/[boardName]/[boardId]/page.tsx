@@ -21,7 +21,7 @@ const PlatformLaunchPage = () => {
       )}
     >
       <TopBar />
-      <div className="w-screen overflow-x-auto md:w-auto">
+      <div className="w-screen max-w-[1192px] overflow-x-auto md:w-auto">
         <MainComponent />
       </div>
     </main>

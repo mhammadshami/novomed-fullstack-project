@@ -1,8 +1,9 @@
 import React from "react";
 import ConfirmModal from "@/components/ui/modals/confirmModal/ConfirmModal";
+import useDeleteTask from "../../hooks/useDeleteTask";
 
 interface DeleteTaskModalProps {
-  taskId: string;
+  taskId: number;
   onClose: () => void;
 }
 
@@ -10,7 +11,10 @@ const DeleteTaskModal: React.FC<DeleteTaskModalProps> = ({
   taskId,
   onClose,
 }) => {
-  const handleTaskDelete = () => {};
+  const { mutate, isPending } = useDeleteTask(onClose);
+  const handleDeleteTask = () => {
+    mutate(taskId);
+  };
 
   return (
     <ConfirmModal
@@ -19,7 +23,7 @@ const DeleteTaskModal: React.FC<DeleteTaskModalProps> = ({
       closeButtonTxt="Cancel"
       confirmButtonTxt="Delete"
       onClose={onClose}
-      onConfirm={handleTaskDelete}
+      onConfirm={handleDeleteTask}
     />
   );
 };
