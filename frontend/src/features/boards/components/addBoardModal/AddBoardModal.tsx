@@ -29,7 +29,7 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({ onClose }) => {
     resolver: zodResolver(AddBoardSchema),
     defaultValues: {
       name: "",
-      columns: [{ name: "" }, { name: "" }],
+      columns: [{ name: "" }],
     },
   });
 

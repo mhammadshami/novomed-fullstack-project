@@ -9,44 +9,56 @@ import useSidebarStore from "@/store/useSidebarStore";
 import useModalStore from "@/store/useModalStore";
 import DropdownSection from "./dropdownSection/DropdownSection";
 import { useSearchParams } from "next/navigation";
+import MobileSidebar from "../sideBar/mobilSidebar/MobileSidebar";
 
 const TopBar = () => {
   const isSidebarOpen = useSidebarStore((state) => state.isOpen);
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const searchParams = useSearchParams();
-  const boardName =  searchParams.get("name");
-  
+  const boardName = searchParams.get("name");
+
   const handleAddTask = () => {
+    setShowMobileSidebar(false);
     useModalStore.getState().openModal("add-task");
+  };
+
+  const toggleShowMobileSidebar = () => {
+    setShowMobileSidebar((prevState) => !prevState);
   };
 
   return (
     <header
       className={clsx(
-        "max-w-[100vw]",
-        "bg-white px-[24px] h-[64px] sm:h-[96px] flex items-center justify-between border-b border-secondary",
+        isSidebarOpen ? "md:ps-[32px]" : "md:ps-0",
+        "relative bg-white px-[16px] md:pe-[32.38px] h-[64px] md:h-[96px] flex items-center justify-between border-b border-secondary",
         "dark:bg-gray-500 dark:border-gray-400"
       )}
     >
       <div className="flex h-full">
         {!isSidebarOpen && <Logo />}
-        <div className="flex ps-6">
-          <PageTitle text={boardName} />
+        <div
+          className={clsx("flex", isSidebarOpen ? "" : "md:ps-6")}
+          onClick={toggleShowMobileSidebar}
+        >
+          <PageTitle text={boardName} showMobileSidebar={showMobileSidebar} />
         </div>
       </div>
 
       <div className="flex items-center gap-[24px]">
         <Button
           onClick={handleAddTask}
-          className="flex items-center px-[18px] py-[10px] sm:px-[24px] sm:py-[14px]"
+          className="flex items-center !px-[18px] !py-[10px] md:px-[24px] md:py-[14px]"
         >
           <div className="leading-[19px] flex items-center">
             <PlusIcon />
-            <span className="hidden sm:block">&nbsp;</span>
-            <span className="hidden sm:block">Add New Task</span>
+            <span className="hidden md:block">&nbsp;</span>
+            <span className="hidden md:block">Add New Task</span>
           </div>
         </Button>
 
-        <DropdownSection/>
+        <DropdownSection />
+
+        {showMobileSidebar && <MobileSidebar />}
       </div>
     </header>
   );

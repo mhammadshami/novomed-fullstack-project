@@ -4,6 +4,10 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        "custom-gradiant": "linear-gradient(180deg,#E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%)",
+        "custom-dark-gradiant": "linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%)"
+      },
       fontSize: {
         "heading-xl": ["24px", { lineHeight: "30px", fontWeight: "700" }],
         "heading-l": ["18px", { lineHeight: "23px", fontWeight: "700" }],

@@ -23,13 +23,13 @@ const PlatformLaunchPage = () => {
   return (
     <main
       className={clsx(
-        "flex-1 ms:0",
+        "flex-1 overflow-x-hidden ms:0",
         "transition-all duration-300 ease-in-out",
         isSidebarOpen ? "md:ms-[300px]" : "md:ms-0"
       )}
     >
       <TopBar />
-      <div className="w-screen max-w-[1192px] overflow-x-auto md:w-auto min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-96px)] relative">
+      <div className="min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-96px)] relative overflow-x-auto">
         {!boardId ? (
           <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full max-w-[calc(100vh-32px)]">
             <EmptyState
@@ -39,7 +39,9 @@ const PlatformLaunchPage = () => {
             />
           </div>
         ) : (
-          <MainComponent />
+          <div className="">
+            <MainComponent />
+          </div>
         )}
       </div>
     </main>

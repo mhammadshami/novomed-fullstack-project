@@ -1,5 +1,590 @@
 {
   "swagger": "2.0",
-  "info": { "title": "Task API", "version": "1.0.0" },
-  "paths": {}
+  "info": {
+    "title": "Task API",
+    "version": "1.0.0",
+    "description": "API documentation for managing boards, columns, tasks and subtasks"
+  },
+  "paths": {
+    "/api/boards": {
+      "get": {
+        "summary": "get all boards",
+        "tags": ["Boards"],
+        "responses": {
+          "200": {
+            "description": "A list of boards"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new board",
+        "tags": ["Boards"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "columns": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["name"]
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Board created successfully"
+          }
+        }
+      }
+    },
+    "/api/boards/{id}": {
+      "get": {
+        "summary": "Get a board by ID",
+        "tags": ["Boards"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the board"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board found and returned"
+          },
+          "404": {
+            "description": "Board not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a board by ID",
+        "tags": ["Boards"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the board"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "columns": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "(optional) Column ID for updating existing columns"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["name"]
+                  }
+                }
+              },
+              "required": ["name", "columns"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board updated successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a board by ID",
+        "tags": ["Boards"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the board to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Board deleted successfully"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/columns": {
+      "post": {
+        "summary": "Create a new column",
+        "tags": ["Columns"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "boardId": {
+                  "type": "integer"
+                },
+                "order": {
+                  "type": "integer"
+                }
+              },
+              "required": ["name", "boardId", "order"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Column created successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/columns/{id}": {
+      "put": {
+        "summary": "Update a column by ID",
+        "tags": ["Columns"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the column to update"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "order": {
+                  "type": "integer"
+                }
+              },
+              "required": ["name", "order"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Column updated successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a column by ID",
+        "tags": ["Columns"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the column to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Column deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Column deleted successfully"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/columns/board/{boardId}": {
+      "get": {
+        "summary": "Get columns (with tasks and subtasks) by board ID",
+        "tags": ["Columns"],
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the board"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of columns with nested tasks and subtasks"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/tasks/column/{columnId}": {
+      "get": {
+        "summary": "Get tasks by column ID (including subtasks)",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the column"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tasks with nested subtasks"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/tasks": {
+      "post": {
+        "summary": "Create a new task",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "columnId": {
+                  "type": "integer"
+                },
+                "order": {
+                  "type": "integer"
+                },
+                "subtasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "isDone": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": ["title"]
+                  }
+                }
+              },
+              "required": ["title", "columnId", "order"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Task created successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/tasks/{id}": {
+      "put": {
+        "summary": "Update a task by ID (including subtasks)",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the task to update"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "columnId": {
+                  "type": "integer"
+                },
+                "order": {
+                  "type": "integer"
+                },
+                "subtasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "isDone": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": ["title"]
+                  }
+                }
+              },
+              "required": ["title", "columnId", "order", "subtasks"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task updated successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a task by ID",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the task to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Task deleted successfully"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/subtasks/task/{taskId}": {
+      "get": {
+        "summary": "Get subtasks by task ID",
+        "tags": ["Subtasks"],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the task to get its subtasks"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of subtasks"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/subtasks": {
+      "post": {
+        "summary": "Create a new subtask",
+        "tags": ["Subtasks"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "taskId": {
+                  "type": "integer"
+                },
+                "isDone": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["title", "taskId"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Subtask created successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/subtasks/{id}": {
+      "put": {
+        "summary": "Update a subtask by ID",
+        "tags": ["Subtasks"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the subtask to update"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "isDone": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["title", "isDone"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subtask updated successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a subtask by ID",
+        "tags": ["Subtasks"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the subtask to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subtask deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Subtask deleted successfully"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
 }

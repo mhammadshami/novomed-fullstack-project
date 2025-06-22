@@ -1,16 +1,29 @@
 import React from "react";
 import ArrowDownIcon from "../icons/ArrowDownIcon";
+import useSidebarStore from "@/store/useSidebarStore";
+import clsx from "clsx";
+import ArrowUpIcon from "../icons/ArrowUpIcon";
 
 interface PageTitleProps {
   text: string | null;
+  showMobileSidebar: boolean;
 }
 
-const PageTitle: React.FC<PageTitleProps> = ({ text }) => {
+const PageTitle: React.FC<PageTitleProps> = ({ text, showMobileSidebar }) => {
   return (
-    <h1 className="text-[18px] sm:text-[24px] font-bold leading-none flex items-center">
+    <h1
+      className={clsx(
+        "text-[18px] md:text-[24px] font-bold leading-none flex items-center gap-[8px]"
+      )}
+    >
       {text}
-      <span className="block sm:hidden">&nbsp;</span>
-      <ArrowDownIcon className="block cursor-pointer sm:hidden text-primary" />
+
+      <ArrowDownIcon
+        className={clsx(
+          "block cursor-pointer md:hidden text-primary transition-transform duration-300 ease-in-out",
+          showMobileSidebar ? "rotate-180" : "rotate-0"
+        )}
+      />
     </h1>
   );
 };

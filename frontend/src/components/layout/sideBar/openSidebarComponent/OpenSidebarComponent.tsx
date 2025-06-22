@@ -9,7 +9,7 @@ const OpenSideBarComponent = () => {
   return (
     <div
       className={clsx(
-        `fixed left-0 bottom-[32px]`,
+        `fixed left-0 bottom-[32px] z-[100]`,
         `hidden`,
         !isOpenSideBar ? "md:flex" : "md:hidden",
         `bg-primary px-[18px] py-[19px] rounded-tr-full rounded-br-full cursor-pointer`,

@@ -4,7 +4,6 @@ import useModalStore from "@/store/useModalStore";
 import AddTaskModal from "@/features/tasks/components/addTaskModal/AddTaskModal";
 import ShowTaskModal from "@/features/tasks/components/showTaskModal/ShowTaskModal";
 import DeleteTaskModal from "@/features/tasks/components/deleteTaskModal/DeleteTaskModal";
-import AddColumnModal from "@/features/columns/components/addColumnModal/AddColumnModal";
 import { AnimatePresence, motion } from "framer-motion";
 import AddBoardModal from "@/features/boards/components/addBoardModal/AddBoardModal";
 import DeleteBoardModal from "@/features/boards/components/deleteBoardModal/DeleteBoardModal";
@@ -40,7 +39,7 @@ const ModalRenderer = () => {
                 "relative w-full max-w-lg text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
               )}
             >
-              <div className="max-h-[80vh] p-6 sm:p-8 overflow-y-auto">
+              <div className="max-h-[80vh] p-6 md:p-8 overflow-y-auto">
                 {" "}
                 {type === "add-task" && <AddTaskModal onClose={closeModal} />}
                 {type === "add-board" && <AddBoardModal onClose={closeModal} />}
@@ -50,9 +49,6 @@ const ModalRenderer = () => {
                 )}
                 {type === "edit-task" && (
                   <EditTaskModal task={data?.task} onClose={closeModal} />
-                )}
-                {type === "add-column" && (
-                  <AddColumnModal onClose={closeModal} />
                 )}
                 {type === "delete-board" && (
                   <DeleteBoardModal boardId={data?.boardId} onClose={closeModal} />

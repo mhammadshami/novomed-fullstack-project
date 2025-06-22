@@ -1,8 +1,14 @@
+import clsx from "clsx";
 import React from "react";
 
 const AddColumnComponent = () => {
   return (
-    <div className="w-[280px] bg-gradient-to-b from-[#E9EFFA] to-[#E9EFFA]/50 rounded-md flex items-center">
+    <div
+      className={clsx(
+        "w-[280px] rounded-md flex items-center", 
+       "bg-custom-gradiant dark:bg-custom-dark-gradiant"
+      )}
+    >
       <button className="text-[24px] p-0 mx-auto text-gray-300 font-bold">
         + New Column
       </button>
