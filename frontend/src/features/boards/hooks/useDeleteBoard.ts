@@ -12,7 +12,7 @@ const useDeleteBoard = (onClose?: () => void) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["boards"] })
             onClose?.();
-            router.push("/")
+            router.push("/empty/0")
         },
         onError: () => {
             toast.error("Failed to delete the board.")

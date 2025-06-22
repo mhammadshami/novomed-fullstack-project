@@ -4,6 +4,8 @@ import AddColumnComponent from "@/features/columns/components/addColumnComponent
 import useBoardColumnsWithTasks from "@/features/columns/hooks/useBoardColumnsWithTasks";
 import useGetBoardIdFromURL from "@/hooks/useGetBoardIdFromURL";
 import { BoardColumn } from "@/features/columns/types/types";
+import EmptyState from "@/components/ui/EmptyState";
+import useModalStore from "@/store/useModalStore";
 
 const columnColors = ["#49c4e5", "#8471f2", "#67e2ae"];
 
@@ -12,15 +14,15 @@ const MainComponent = () => {
   const { data: columns } = useBoardColumnsWithTasks(boardId);
 
   return (
-    <div className="min-w-max flex gap-6 p-6 pb-[50px] min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-96px)]">
-      {columns?.map((column: BoardColumn, index: number) => (
+    <div className="flex gap-6 p-6 pb-[50px] min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-96px)] ">
+       {columns?.map((column: BoardColumn, index: number) => (
         <BoardColumnComponent
           data={column}
           circleColor={columnColors[index % columnColors.length]}
         />
       ))}
 
-      <AddColumnComponent />
+      <AddColumnComponent /> 
     </div>
   );
 };

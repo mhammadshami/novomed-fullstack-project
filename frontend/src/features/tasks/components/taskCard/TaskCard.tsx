@@ -1,7 +1,7 @@
 import { Task } from "@/features/columns/types/types";
 import useModalStore from "@/store/useModalStore";
 import clsx from "clsx";
-import React from "react";
+import React, { useMemo } from "react";
 
 interface TaskCardProps {
   data: Task;
@@ -10,9 +10,14 @@ interface TaskCardProps {
 const TaskCard: React.FC<TaskCardProps> = ({ data }) => {
   const { id, title, description, columnId, order, subtasks } = data;
 
-  const handleEditTask = () => {
-    useModalStore.getState().openModal("edit-task", { task: data });
+  const handleShowTask = () => {
+    useModalStore.getState().openModal("show-task", { task: data });
   };
+
+  const subtaskTotalCount = subtasks.length;
+  const subtasksDoneCount = useMemo(() => {
+    return subtasks?.filter((subtask) => subtask.isDone)?.length;
+  }, [subtasks]);
 
   return (
     <div
@@ -20,7 +25,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ data }) => {
         "group h-[88px] rounded-lg shadow-[0px_4px_6px_0px_#364E7E1A] px-4 py-6 cursor-pointer mb-5",
         "dark:bg-gray-500"
       )}
-      onClick={handleEditTask}
+      onClick={handleShowTask}
     >
       <h3
         className={clsx(
@@ -33,7 +38,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ data }) => {
         {title}
       </h3>
       <p className="text-xs text-gray-300 leading-[15px] mt-2">
-        0 of 3 substasks
+        {subtasksDoneCount} of {subtaskTotalCount}
       </p>
     </div>
   );

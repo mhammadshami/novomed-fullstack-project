@@ -8,10 +8,13 @@ import Logo from "./Logo/Logo";
 import useSidebarStore from "@/store/useSidebarStore";
 import useModalStore from "@/store/useModalStore";
 import DropdownSection from "./dropdownSection/DropdownSection";
+import { useSearchParams } from "next/navigation";
 
 const TopBar = () => {
   const isSidebarOpen = useSidebarStore((state) => state.isOpen);
-
+  const searchParams = useSearchParams();
+  const boardName =  searchParams.get("name");
+  
   const handleAddTask = () => {
     useModalStore.getState().openModal("add-task");
   };
@@ -27,7 +30,7 @@ const TopBar = () => {
       <div className="flex h-full">
         {!isSidebarOpen && <Logo />}
         <div className="flex ps-6">
-          <PageTitle text="Platform Launch" />
+          <PageTitle text={boardName} />
         </div>
       </div>
 

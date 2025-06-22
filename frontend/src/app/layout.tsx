@@ -20,17 +20,6 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <head>
-        <Script id="set-theme" strategy="beforeInteractive">
-          {`
-            (function() {
-              const theme = localStorage.getItem('theme-storage');
-              const preferredTheme = theme ? JSON.parse(theme).state.theme : 'light';
-              document.documentElement.classList.add(preferredTheme);
-            })();
-          `}
-        </Script>
-      </head> */}
       <QueryClientProvider client={queryClient}>
         <body className="bg-gray-100 dark:bg-gray-900">
           <ThemeProvider>

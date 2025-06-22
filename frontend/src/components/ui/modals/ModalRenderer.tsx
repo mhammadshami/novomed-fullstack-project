@@ -2,7 +2,7 @@
 import React from "react";
 import useModalStore from "@/store/useModalStore";
 import AddTaskModal from "@/features/tasks/components/addTaskModal/AddTaskModal";
-import EditTaskModal from "@/features/tasks/components/editTaskModal/EditTaskModal";
+import ShowTaskModal from "@/features/tasks/components/showTaskModal/ShowTaskModal";
 import DeleteTaskModal from "@/features/tasks/components/deleteTaskModal/DeleteTaskModal";
 import AddColumnModal from "@/features/columns/components/addColumnModal/AddColumnModal";
 import { AnimatePresence, motion } from "framer-motion";
@@ -10,6 +10,7 @@ import AddBoardModal from "@/features/boards/components/addBoardModal/AddBoardMo
 import DeleteBoardModal from "@/features/boards/components/deleteBoardModal/DeleteBoardModal";
 import clsx from "clsx";
 import EditBoardModal from "@/features/boards/components/editBoardModal/EditBoardModal";
+import EditTaskModal from "@/features/tasks/components/editTaskModal/EditTaskModal";
 
 const ModalRenderer = () => {
   const { isOpen, type, data, closeModal } = useModalStore();
@@ -39,11 +40,14 @@ const ModalRenderer = () => {
                 "relative w-full max-w-lg text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
               )}
             >
-              <div className="max-h-[80vh] p-6 sm:p-8">
+              <div className="max-h-[80vh] p-6 sm:p-8 overflow-y-auto">
                 {" "}
                 {type === "add-task" && <AddTaskModal onClose={closeModal} />}
                 {type === "add-board" && <AddBoardModal onClose={closeModal} />}
                 {type === "edit-board" && <EditBoardModal board={data.board} onClose={closeModal} />}
+                {type === "show-task" && (
+                  <ShowTaskModal task={data?.task} onClose={closeModal} />
+                )}
                 {type === "edit-task" && (
                   <EditTaskModal task={data?.task} onClose={closeModal} />
                 )}

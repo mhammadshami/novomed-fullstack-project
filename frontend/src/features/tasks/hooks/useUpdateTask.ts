@@ -9,7 +9,7 @@ const useUpdateTask = (onClose?: () => void) => {
         mutationFn: updateTask,
         onSuccess: () => {
             queryClient.invalidateQueries()
-            //onClose?.();
+            onClose?.();
         },
         onError: () => {
             toast.error("Something wen wrong. while updating task")

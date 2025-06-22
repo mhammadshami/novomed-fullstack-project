@@ -1,10 +1,9 @@
-import { useParams } from 'next/navigation'
-import React from 'react'
+import { useSearchParams } from 'next/navigation'
 
 const useGetBoardIdFromURL = () => {
-    const params = useParams();
+    const searchParams = useSearchParams();
 
-    const boardId = parseInt(params.boardId as string);
+    const boardId = parseInt(searchParams.get("id") as string);
 
     return boardId;
 }

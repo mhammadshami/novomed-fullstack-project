@@ -12,33 +12,40 @@ import Button from "@/components/ui/Button";
 import TextareaInput from "@/components/ui/forms/TextareaInput";
 import useStatusOptions from "../../hooks/useStatusOptions";
 import useCreateTask from "../../hooks/useCreateTask";
-import { EditTaskSchema } from "../../validations/validations";
-import { Task } from "@/features/columns/types/types";
+import { AddTaskSchema } from "../../validations/validations";
 import useUpdateTask from "../../hooks/useUpdateTask";
-import SubtaskCheckbox from "@/components/ui/forms/SubtaskCheckbox";
-import DropdownSection from "./DropdownSection";
 
-interface EditTaskModalProps {
+interface AddTaskModalProps {
   onClose: () => void;
-  task: Task;
+  task: {
+    id: number;
+    title: string;
+    description: string;
+    subtasks: { id: number; title: string; isDone: boolean }[];
+    columnId: number;
+    order: number;
+  };
 }
 
-type EditTaskFormData = z.infer<typeof EditTaskSchema>;
+type AddTaskFormData = z.infer<typeof AddTaskSchema>;
 
-const EditTaskModal: React.FC<EditTaskModalProps> = ({ onClose, task }) => {
-  const { options } = useStatusOptions();
+const EditTaskModal: React.FC<AddTaskModalProps> = ({ onClose, task }) => {
+  const { options, isLoading, isError } = useStatusOptions();
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
-    watch,
-  } = useForm<EditTaskFormData>({
-    resolver: zodResolver(EditTaskSchema),
+    setValue,
+  } = useForm<AddTaskFormData>({
+    resolver: zodResolver(AddTaskSchema),
     defaultValues: {
       title: task.title,
       description: task.description,
-      subtasks: task.subtasks,
+      subtasks: task.subtasks.map((s) => ({
+        title: s.title,
+        placeholder: "",
+      })),
       status: task.columnId,
     },
   });
@@ -49,59 +56,68 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ onClose, task }) => {
   });
 
   const { mutate, isPending } = useUpdateTask(onClose);
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name?.startsWith("subtasks") || name === "status") {
-        mutate({
-          id: task.id,
-          title: value.title || task.title,
-          description: value.description || task.description,
-          columnId: value.status || task.columnId,
-          subtasks: (value.subtasks || task.subtasks).map((s) => ({
-            title: s.title,
-            isDone: s.isDone || false,
-          })),
-          order: task.order,
-        });
-      }
+  const onSubmit = (data: AddTaskFormData) => {
+    mutate({
+      id: task.id,
+      title: data.title,
+      description: data.description,
+      columnId: data.status,
+      subtasks: data.subtasks.map((s,i) => ({
+        title: s.title,
+        isDone: task.subtasks[i]?.isDone
+      })),
+      order: task.order
     });
-
-    return () => subscription.unsubscribe();
-  }, [watch, mutate, task]);
+  };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalTitle title="Edit New Task" />
       <div className="flex flex-col gap-6">
-        <div className="flex justify-between">
-          <h3 className="text-heading-l">{task.title}</h3>
-          <DropdownSection taskId={task.id} />
-        </div>
-        <p className="text-gray-300 leading-[23px] font-medium">
-          {task.description}
-        </p>
+        <TextInput
+          label="Title"
+          placeholder="e.g. Take coffee break"
+          {...register("title")}
+          error={errors.title?.message}
+        />
+        <TextareaInput
+          label="Description"
+          placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
+          {...register("description")}
+          error={errors.description?.message}
+        />
         <div>
           <InputLabel label="Subtasks" />
           <div className="flex flex-col gap-y-3">
-            {fields.map((field, index) => {
-              console.log("field", field);
-
-              return (
-                <div key={field.id} className="flex gap-4">
-                  <Controller
-                    control={control}
-                    name={`subtasks.${index}.isDone`}
-                    render={({ field }) => (
-                      <SubtaskCheckbox
-                        label={fields[index].title}
-                        checked={field.value}
-                        onChange={field.onChange}
-                      />
-                    )}
-                  />
-                </div>
-              );
-            })}
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex gap-4">
+                <TextInput
+                  placeholder={field.placeholder}
+                  {...register(`subtasks.${index}.title`)}
+                  error={errors.subtasks?.[index]?.title?.message}
+                />{" "}
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="text-gray-300"
+                >
+                  <X className="w-[14.85px] h-[14.85px]" />
+                </button>
+              </div>
+            ))}
+            <Button
+              variant="secondary"
+              size="sm"
+              className="w-full"
+              onClick={() =>
+                append({
+                  title: "",
+                  placeholder: "",
+                })
+              }
+            >
+              + Add New Subtask
+            </Button>
           </div>
         </div>
 
@@ -110,17 +126,19 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ onClose, task }) => {
             control={control}
             name="status"
             render={({ field }) => (
-              <div className="w-full">
-                <SelectInput
-                  label="Status"
-                  options={options}
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              </div>
+              <SelectInput
+                label="Status"
+                options={options}
+                value={field.value}
+                onChange={field.onChange}
+              />
             )}
           />
         </div>
+
+        <Button size="sm" type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Saving..." : "Save Changes"}
+        </Button>
       </div>
     </form>
   );

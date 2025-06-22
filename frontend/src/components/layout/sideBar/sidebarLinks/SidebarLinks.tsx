@@ -14,7 +14,7 @@ const SidebarLinks = () => {
   const pathname = usePathname();
 
   const { data: boards } = useBoards();
-
+  const boardsCount = boards?.length;
   const handleCreateNewBoard = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     useModalStore.getState().openModal("add-board");
@@ -23,11 +23,11 @@ const SidebarLinks = () => {
   return (
     <div>
       <h2 className="ps-8 text-xs text-gray-300 font-bold leading-[15px] mb-[19px] tracking-[2.4px]">
-        ALL BOARDS (3)
+        ALL BOARDS {boardsCount ? `(${boardsCount})` : ""}
       </h2>
       <ul className="text-gray-300">
         {boards?.map((item: Board, index: number) => {
-          const path = `/${item.name}/${item.id}`;
+          const path = `/?name=${encodeURIComponent(item.name)}&id=${item.id}`;
           const isActive = pathname === encodeURI(path);
 
           return (

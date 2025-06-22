@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type ModalType = 'add-task' | 'edit-task' | 'delete-task' | 'add-column' | 'add-board' | 'delete-board' | 'edit-board'  | null;
+type ModalType = 'add-task' | 'edit-task' | 'show-task' | 'delete-task' | 'add-column' | 'add-board' | 'delete-board' | 'edit-board'  | null;
 
 interface ModalStore {
     isOpen: boolean;

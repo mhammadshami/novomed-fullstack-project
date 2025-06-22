@@ -2,7 +2,7 @@ import React from "react";
 import ArrowDownIcon from "../icons/ArrowDownIcon";
 
 interface PageTitleProps {
-  text: string;
+  text: string | null;
 }
 
 const PageTitle: React.FC<PageTitleProps> = ({ text }) => {
