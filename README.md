@@ -98,6 +98,10 @@ Each feature folder contains:
 - `/types`: Typescript types
 - `/validations`: Zod schemas
 
+## Demo Video
+
+[Click here to watch the demo video](./frontend/public/demo.mp4)
+
 ## Preview
 
 <img src="./frontend/public/schreenshots/schreenshot1.png" width="100%" />
