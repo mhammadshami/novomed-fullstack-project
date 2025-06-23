@@ -1,7 +1,5 @@
 "use client";
-import type { Metadata } from "next";
 import "../styles/globals.css";
-//import Script from "next/script";
 
 // components
 import SideBar from "@/components/layout/sideBar/SideBar";
@@ -9,7 +7,7 @@ import ThemeProvider from "@/components/shared/ThemeProvider";
 import ModalRenderer from "@/components/ui/modals/ModalRenderer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function RootLayout({
   children,
@@ -24,8 +22,10 @@ export default function RootLayout({
         <body className="bg-gray-100 dark:bg-gray-900">
           <ThemeProvider>
             <div className="flex">
-              <SideBar />
-              {children}
+              <Suspense fallback={<></>}>
+                <SideBar />
+                {children}
+              </Suspense>
               <ReactQueryDevtools initialIsOpen={false} />
             </div>
           </ThemeProvider>

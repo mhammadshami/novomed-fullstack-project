@@ -13,7 +13,7 @@ const baseStyles = "rounded-full font-bold transition-colors duration-200";
 
 const variants = {
   primary: "bg-primary text-white hover:bg-primary-hover",
-  secondary: "bg-primary/10 text-primary font-bold hover:bg-primary/25",
+  secondary: "bg-primary/10 dark:bg-white text-primary font-bold hover:bg-primary/25",
   destructive: "bg-destructive text-white hover:bg-destructive-hover",
 };
 

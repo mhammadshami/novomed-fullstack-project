@@ -1,9 +1,9 @@
 "use client";
-import SelectInput from "@/components/ui/forms/SelectInput";
-import React, { useState } from "react";
+
+import React from "react";
 import { z } from "zod";
 import ModalTitle from "../../../../components/ui/modals/ModalTitle";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "../../../../components/ui/forms/TextInput";
 import InputLabel from "../../../../components/ui/forms/InputLabel";
@@ -30,7 +30,8 @@ const EditBoardModal: React.FC<EditBoardModalProps> = ({ onClose, board }) => {
     resolver: zodResolver(EditBoardSchema),
     defaultValues: {
       name: board.name,
-      columns: board?.columns?.map((col) => ({ id: col.id, name: col.name })) || [],
+      columns:
+        board?.columns?.map((col) => ({ id: col.id, name: col.name })) || [],
     },
   });
 

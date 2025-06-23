@@ -15,7 +15,6 @@ const ModalRenderer = () => {
   const { isOpen, type, data, closeModal } = useModalStore();
 
   if (!isOpen || !type) return null;
-  console.log('data', data);
   
   return (
     <AnimatePresence>
@@ -36,10 +35,10 @@ const ModalRenderer = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 2 }}
               className={clsx(
-                "relative w-full max-w-lg text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-800"
+                "relative w-full max-w-[480px] text-left transition-all transform bg-white rounded-lg shadow-xl  dark:bg-gray-500"
               )}
             >
-              <div className="max-h-[80vh] p-6 md:p-8 overflow-y-auto">
+              <div className="p-6 md:p-8">
                 {" "}
                 {type === "add-task" && <AddTaskModal onClose={closeModal} />}
                 {type === "add-board" && <AddBoardModal onClose={closeModal} />}

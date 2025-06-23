@@ -6,17 +6,6 @@ import React, {
 } from "react";
 import InputLabel from "./InputLabel";
 
-// interface TextInputProps {
-//   label?: string;
-//   placeholder?: string;
-//   value?: string;
-//   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   error?: string;
-//   type?: HTMLInputTypeAttribute;
-//   name?: string;
-//   className?: string;
-// }
-
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
@@ -26,11 +15,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     {
       label,
       placeholder = "",
-      //value,
-      //onChange,
       error = "",
       type = "text",
-      //name,
       className = "",
       ...props
     },

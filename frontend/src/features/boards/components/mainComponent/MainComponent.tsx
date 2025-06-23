@@ -35,7 +35,7 @@ const MainComponent = () => {
       </div>
     );
   return (
-    <div className="w-full min-w-[2000px] flex gap-6 p-6 pb-[50px] min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-96px)] ">
+    <div className="w-full min-w-[2000px] flex gap-6 p-6 pb-[50px] min-h-[calc(100vh-72px)] md:min-h-[calc(100vh-104px)] ">
       {isLoading
         ? Array.from({ length: 3 }).map((_, i) => <ColumnSkeleton key={i} />)
         : columns?.map((column: BoardColumn, index: number) => (

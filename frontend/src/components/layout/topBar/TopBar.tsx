@@ -1,3 +1,5 @@
+"use client"
+import { useSearchParams } from "next/navigation";
 import PlusIcon from "@/components/icons/PlusIcon";
 import PageTitle from "@/components/ui/PageTitle";
 import Button from "@/components/ui/Button";
@@ -8,7 +10,6 @@ import Logo from "./Logo/Logo";
 import useSidebarStore from "@/store/useSidebarStore";
 import useModalStore from "@/store/useModalStore";
 import DropdownSection from "./dropdownSection/DropdownSection";
-import { useSearchParams } from "next/navigation";
 import MobileSidebar from "../sideBar/mobilSidebar/MobileSidebar";
 
 const TopBar = () => {

@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import SidebarLinks from "../sidebarLinks/SidebarLinks";
 import ModeToggler from "../modeToggler/ModeToggler";
 import clsx from "clsx";
-import useClickOutside from "@/hooks/useClickOutside";
 
 const MobileSidebar = () => {
   return (

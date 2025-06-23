@@ -112,7 +112,7 @@ const EditTaskModal: React.FC<ShowTaskModalProps> = ({ onClose, task }) => {
             render={({ field }) => (
               <div className="w-full">
                 <SelectInput
-                  label="Status"
+                  label="Confirm Status"
                   options={options}
                   value={field.value}
                   onChange={field.onChange}

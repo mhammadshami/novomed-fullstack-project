@@ -5,5 +5,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
 body {
-  @apply font-sans bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300;
+  @apply font-sans text-black transition-colors duration-300 bg-white dark:bg-gray-900 dark:text-white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #635fc7;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }

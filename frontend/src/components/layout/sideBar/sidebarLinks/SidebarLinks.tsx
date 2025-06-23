@@ -43,15 +43,11 @@ const SidebarLinks = () => {
               }`;
               const isActive = pathname === path;
 
-              console.log({
-                path,
-                pathname,
-              });
               return (
                 <li
                   key={item.id}
                   className={clsx(
-                    "group ps-8 py-[14px] rounded-tr-full rounded-br-full hover:bg-[#EFEFF9] dark:hover:bg-white",
+                    "h-[48px] group rounded-tr-full rounded-br-full hover:bg-[#EFEFF9] dark:hover:bg-white",
                     "transition-all duration-300 ease-in-out",
                     isActive ? " bg-primary" : "bg-transparent"
                   )}
@@ -59,7 +55,8 @@ const SidebarLinks = () => {
                   <Link
                     href={path}
                     className={clsx(
-                      "h-[19px] flex items-center gap-[16px] text-sm font-bold tracking-normal leading-none",
+                      "block ps-8 h-full",
+                      "flex items-center gap-[16px] text-sm font-bold tracking-normal leading-none",
                       "group-hover:text-primary",
                       isActive && "text-white"
                     )}
@@ -78,7 +75,7 @@ const SidebarLinks = () => {
             })}
             <li
               className={clsx(
-                "group ps-8 py-[14px] rounded-tr-full rounded-br-full hover:bg-[#EFEFF9] dark:hover:bg-white",
+                "h-[48px] group ps-8 rounded-tr-full rounded-br-full hover:bg-[#EFEFF9] dark:hover:bg-white",
                 "transition-all duration-300 ease-in-out"
               )}
             >
@@ -86,7 +83,7 @@ const SidebarLinks = () => {
                 href={"/"}
                 onClick={handleCreateNewBoard}
                 className={clsx(
-                  "h-[19px] flex items-center gap-[16px] text-sm font-bold tracking-normal leading-none",
+                  "h-full flex items-center gap-[16px] text-sm font-bold tracking-normal leading-none",
                   "text-primary",
                   "group-hover:text-primary"
                 )}

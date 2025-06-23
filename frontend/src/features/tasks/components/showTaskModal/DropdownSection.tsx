@@ -13,7 +13,6 @@ const DropdownSection: React.FC<DropdownSectionProps> = ({ task }) => {
   };
 
   const handleEditTask = () => {
-    console.log('handleEditTask', task)
     useModalStore.getState().openModal("edit-task", { task });
   };
 

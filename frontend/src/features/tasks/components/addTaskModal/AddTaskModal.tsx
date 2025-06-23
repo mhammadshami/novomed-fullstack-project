@@ -91,7 +91,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ onClose }) => {
                   onClick={() => remove(index)}
                   className="text-gray-300"
                 >
-                  <X className="w-[14.85px] h-[14.85px]" />
+                  <X className="w-[14.85px] h-[14.85px] hover:text-destructive" />
                 </button>
               </div>
             ))}

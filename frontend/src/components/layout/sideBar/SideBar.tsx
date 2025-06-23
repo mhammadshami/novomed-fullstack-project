@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import clsx from "clsx";
 
 import SidebarHead from "./sideBarHead/SidebarHead";
@@ -25,7 +25,9 @@ const SideBar = () => {
         )}
       >
         <SidebarHead />
-        <SidebarLinks />
+        <Suspense fallback={<></>}>
+          <SidebarLinks />
+        </Suspense>
         <div className="mt-auto">
           <ModeToggler />
           <SidebarToggler />

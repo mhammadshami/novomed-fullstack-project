@@ -29,7 +29,7 @@ const PlatformLaunchPage = () => {
       )}
     >
       <TopBar />
-      <div className="min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-96px)] relative overflow-x-auto">
+      <div className="min-h-[calc(100vh-72px)] md:min-h-[calc(100vh-104px)] relative overflow-x-auto">
         {!boardId ? (
           <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full max-w-[calc(100vh-32px)]">
             <EmptyState

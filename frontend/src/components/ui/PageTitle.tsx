@@ -1,8 +1,6 @@
 import React from "react";
 import ArrowDownIcon from "../icons/ArrowDownIcon";
-import useSidebarStore from "@/store/useSidebarStore";
 import clsx from "clsx";
-import ArrowUpIcon from "../icons/ArrowUpIcon";
 
 interface PageTitleProps {
   text: string | null;

@@ -1,15 +1,14 @@
 "use client";
-import SelectInput from "@/components/ui/forms/SelectInput";
-import React, { useState } from "react";
+
+import React from "react";
 import { z } from "zod";
 import ModalTitle from "../../../../components/ui/modals/ModalTitle";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "../../../../components/ui/forms/TextInput";
 import InputLabel from "../../../../components/ui/forms/InputLabel";
 import { X } from "lucide-react";
 import Button from "../../../../components/ui/Button";
-import TextareaInput from "../../../../components/ui/forms/TextareaInput";
 import useCreateBoard from "../../hooks/useCreateBoard";
 import { AddBoardSchema } from "../../validations/validations";
 
