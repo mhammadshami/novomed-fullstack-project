@@ -64,7 +64,7 @@ exports.getBoardById = async (req, res) => {
 exports.updateBoard = async (req, res) => {
   const { id } = req.params;
   const { name, columns } = req.body;
-  console.log('columns', columns)
+
   try {
     const boardId = parseInt(id);
 
