@@ -70,6 +70,7 @@ OR
 (Faster)
 ```bash
 cd frontend
+npm install
 npm run build
 npm start
 ```
